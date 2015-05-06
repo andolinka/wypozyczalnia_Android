@@ -2,11 +2,28 @@ package com.warsztaty.wypozyczalnia;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RegisterActivity extends ActionBarActivity {
+
+    private static final String TAG = RegisterActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,5 +52,20 @@ public class RegisterActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void registerClick(View view) {
+        String username =  ((EditText)findViewById(R.id.emailText)).getText().toString();
+        String password = ((EditText)findViewById(R.id.passwordText)).getText().toString();
+        String rptPassword = ((EditText)findViewById(R.id.rptPasswordText)).getText().toString();
+
+        if(password != rptPassword)
+        {
+            Log.d(TAG, "Passwords do not match");
+            // Do something here
+            return;
+        }
+        AuthController controller = new AuthController(this);
+        controller.Register(username, password);
     }
 }

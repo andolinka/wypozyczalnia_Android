@@ -1,26 +1,26 @@
 package com.warsztaty.wypozyczalnia;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 
 
-public class MainPage extends ActionBarActivity {
+public class LoginActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_page);
+        setContentView(R.layout.activity_login);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main_page, menu);
+        getMenuInflater().inflate(R.menu.menu_login, menu);
         return true;
     }
 
@@ -39,13 +39,10 @@ public class MainPage extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void changeToLogin(View view) {
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
-    }
-
-    public void changeToRegister(View view) {
-        Intent intent = new Intent(this, RegisterActivity.class);
-        startActivity(intent);
+    public void clickLogin(View view) {
+        AuthController auth = new AuthController(this);
+        String username =  ((EditText)findViewById(R.id.emailText)).getText().toString();
+        String password = ((EditText)findViewById(R.id.passwordText)).getText().toString();
+        auth.Login(username, password);
     }
 }
