@@ -32,6 +32,7 @@ public class ApiController {
         protected JSONObject doInBackground(Void... params) {
             HttpURLConnection connection = null;
             try {
+                Log.d("ApiController", "Attempting to send: " + JsonString);
                 URL urlObj = new URL(URL);
                 connection = (HttpURLConnection)urlObj.openConnection();
 
