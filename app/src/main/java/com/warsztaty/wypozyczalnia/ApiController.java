@@ -46,7 +46,7 @@ public class ApiController {
                 connection.setRequestProperty("Content-Type", "application/json;charset=utf-8");
                 connection.setRequestProperty("X-Requested-With", "XMLHttpRequest");
 
-                Log.d("ApiController", "Attempting connection");
+                Log.d("ApiController", "Attempting connection at " + URL);
                 connection.connect();
 
                 OutputStream out = new BufferedOutputStream(connection.getOutputStream());
@@ -54,6 +54,7 @@ public class ApiController {
                 out.flush();
                 out.close();
 
+                Log.d("ApiController", "Getting a response...");
                 JSONObject resp = new JSONObject(ReadResponse(connection.getResponseCode() < HttpStatus.SC_BAD_REQUEST ? connection.getInputStream() : connection.getErrorStream()));
 
                 Log.d("ApiController", "Response: " + resp.toString());

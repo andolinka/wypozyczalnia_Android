@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name='api_path'>http://198.245.60.49:8080/luxlimo/rsapi/v1.0/</string>
-    <string name="api_register">users/register</string>
-    <string name="api_login">session/login</string>
+    <string name='api_path'>http://carrent.appbeavers.com:80/</string>
+    <string name="api_register">auth/register</string>
+    <string name="api_login">auth/login</string>
 </resources>

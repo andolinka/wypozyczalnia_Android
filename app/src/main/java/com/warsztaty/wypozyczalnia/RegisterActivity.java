@@ -55,7 +55,8 @@ public class RegisterActivity extends ActionBarActivity {
     }
 
     public void registerClick(View view) {
-        String username =  ((EditText)findViewById(R.id.emailText)).getText().toString();
+        String email = ((EditText)findViewById(R.id.emailText)).getText().toString();
+        String username =  ((EditText)findViewById(R.id.usernameText)).getText().toString();
         String password = ((EditText)findViewById(R.id.passwordText)).getText().toString();
         String rptPassword = ((EditText)findViewById(R.id.rptPasswordText)).getText().toString();
 
@@ -66,6 +67,6 @@ public class RegisterActivity extends ActionBarActivity {
             return;
         }
         AuthController controller = new AuthController(this);
-        controller.Register(username, password);
+        controller.Register(username, password, email);
     }
 }

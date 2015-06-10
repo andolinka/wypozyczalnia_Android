@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="E-Mail"
+            android:text="E-mail (opcjonalnie)"
             android:id="@+id/textView"
             android:paddingTop="32dp" />
 
@@ -38,6 +38,21 @@
             android:inputType="textEmailAddress"
             android:ems="10"
             android:id="@+id/emailText" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Nazwa użytkownika"
+            android:id="@+id/textView7"
+            android:paddingTop="0dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/usernameText" />
 
         <TextView
             android:layout_width="wrap_content"
