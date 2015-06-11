@@ -18,85 +18,59 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import com.android.volley.Cache;
+import com.android.volley.Network;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.JsonObjectRequest;
+
 public class ApiController {
     public ApiController(Context context) {
         AppContext = context;
     }
-    protected class ApiRequest extends AsyncTask<Void, Integer, JSONObject> {
-        ApiRequest(String url, String jsonString) {
-            URL = url;
-            JsonString = jsonString;
+
+    public void SendRequest(int method, int apiUrlResourceId, JSONObject request, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        SendRequest(method, AppContext.getResources().getString(apiUrlResourceId), request, listener, errorListener);
+    }
+    public void SendRequest(int method, String apiUrl, JSONObject request, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        RequestQueue queue = GetQueue(AppContext);
+
+        JsonObjectRequest req = new JsonObjectRequest(method, AppContext.getResources().getString(R.string.api_path) + apiUrl, request, listener, errorListener);
+
+        Log.d("ApiController", "Sending request: " + request.toString());
+        queue.add(req);
+    }
+
+    static protected RequestQueue GetQueue(Context context) {
+        if(ApiQueue == null) {
+            Cache cache = new DiskBasedCache(context.getCacheDir(), 1024 * 1024);
+            Network network = new BasicNetwork(new HurlStack());
+
+            ApiQueue = new RequestQueue(cache, network);
+
+            ApiQueue.start();
         }
 
+        return ApiQueue;
+    }
+
+    protected class GenericErrorListener implements Response.ErrorListener {
+        GenericErrorListener(String tag) {
+            Tag = tag;
+        }
         @Override
-        protected JSONObject doInBackground(Void... params) {
-            HttpURLConnection connection = null;
-            try {
-                Log.d("ApiController", "Attempting to send: " + JsonString);
-                URL urlObj = new URL(URL);
-                connection = (HttpURLConnection)urlObj.openConnection();
-
-                connection.setReadTimeout(10000);
-                connection.setConnectTimeout(15000);
-                connection.setRequestMethod("POST");
-                connection.setDoInput(true);
-                connection.setDoOutput(true);
-                connection.setFixedLengthStreamingMode(JsonString.getBytes().length);
-
-                connection.setRequestProperty("Content-Type", "application/json;charset=utf-8");
-                connection.setRequestProperty("X-Requested-With", "XMLHttpRequest");
-
-                Log.d("ApiController", "Attempting connection");
-                connection.connect();
-
-                OutputStream out = new BufferedOutputStream(connection.getOutputStream());
-                out.write(JsonString.getBytes());
-                out.flush();
-                out.close();
-
-                JSONObject resp = new JSONObject(ReadResponse(connection.getResponseCode() < HttpStatus.SC_BAD_REQUEST ? connection.getInputStream() : connection.getErrorStream()));
-
-                Log.d("ApiController", "Response: " + resp.toString());
-
-                return resp;
-            }
-            catch(IOException e) {
-                Log.d("ApiController", "Could not connect to server: " + e.toString());
-                return null;
-            }
-            catch(JSONException e) {
-                Log.d("ApiController", "Failed to parse JSON: " + e.toString());
-                return null;
-            }
-            finally {
-                if(connection != null)
-                    connection.disconnect();
-            }
+        public void onErrorResponse(VolleyError error) {
+            Log.d(Tag, "Failed to connect due to " + error.networkResponse.statusCode);
         }
 
-        private String URL;
-        private String JsonString;
+        private String Tag;
     }
-
-    // Returns JSONObject with the response from the server
-    protected void SendPost(String url, JSONObject jsonObj) {
-        SendPost(url, jsonObj.toString());
-    }
-    protected void SendPost(String url, String jsonString) {
-        ApiRequest req = new ApiRequest(url, jsonString);
-        req.execute();
-    }
-
-    private String ReadResponse(InputStream input) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-
-        String out = new String("");
-        String tmp;
-        while((tmp = reader.readLine()) != null) {
-            out += tmp;
-        }
-        return out;
-    }
-
     protected Context AppContext;
+
+    static private RequestQueue ApiQueue = null;
 }
