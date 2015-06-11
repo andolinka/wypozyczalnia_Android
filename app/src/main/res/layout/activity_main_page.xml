@@ -24,6 +24,6 @@
             android:text="Zarejestruj"
             android:id="@+id/button3"
             android:layout_gravity="center_horizontal"
-            android:onClick="clickLogin" />
+            android:onClick="registerClick" />
     </LinearLayout>
 </RelativeLayout>

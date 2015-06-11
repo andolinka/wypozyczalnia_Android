@@ -26,6 +26,31 @@
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" >
         </activity>
+        <activity
+            android:name=".AddAddress"
+            android:label="@string/title_activity_add_address" >
+        </activity>
+        <activity
+            android:name=".Cathegory"
+            android:label="@string/title_activity_cathegory" >
+        </activity>
+        <activity
+            android:name=".FilterByPreference"
+            android:label="@string/title_activity_filter_by_preference" >
+        </activity>
+        <activity
+            android:name=".FirstPage"
+            android:label="@string/title_activity_first_page" >
+        </activity>
+        <activity
+            android:name=".RentACar"
+            android:label="@string/title_activity_rent_a_car" >
+        </activity>
+        <activity
+            android:name=".SelectAddress"
+            android:label="@string/title_activity_select_address" >
+        </activity>
+
     </application>
 
 </manifest>
