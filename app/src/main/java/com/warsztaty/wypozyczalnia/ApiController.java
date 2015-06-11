@@ -23,6 +23,7 @@ import com.android.volley.Network;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
@@ -33,11 +34,15 @@ public class ApiController {
         AppContext = context;
     }
 
+    public void SendRequest(int method, int apiUrlResourceId, JSONObject request, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        SendRequest(method, AppContext.getResources().getString(apiUrlResourceId), request, listener, errorListener);
+    }
     public void SendRequest(int method, String apiUrl, JSONObject request, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         RequestQueue queue = GetQueue(AppContext);
 
-        JsonObjectRequest req = new JsonObjectRequest(method, apiUrl, request, listener, errorListener);
+        JsonObjectRequest req = new JsonObjectRequest(method, AppContext.getResources().getString(R.string.api_path) + apiUrl, request, listener, errorListener);
 
+        Log.d("ApiController", "Sending request: " + request.toString());
         queue.add(req);
     }
 
@@ -54,6 +59,17 @@ public class ApiController {
         return ApiQueue;
     }
 
+    protected class GenericErrorListener implements Response.ErrorListener {
+        GenericErrorListener(String tag) {
+            Tag = tag;
+        }
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            Log.d(Tag, "Failed to connect due to " + error.networkResponse.statusCode);
+        }
+
+        private String Tag;
+    }
     protected Context AppContext;
 
     static private RequestQueue ApiQueue = null;
