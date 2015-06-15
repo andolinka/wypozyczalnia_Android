@@ -1,11 +1,16 @@
 package com.warsztaty.wypozyczalnia;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 
 
 public class LoginActivity extends ActionBarActivity {
@@ -43,6 +48,18 @@ public class LoginActivity extends ActionBarActivity {
         AuthController auth = new AuthController(this);
         String username =  ((EditText)findViewById(R.id.emailText)).getText().toString();
         String password = ((EditText)findViewById(R.id.passwordText)).getText().toString();
-        auth.Login(username, password);
+        final Activity thisActivity = this;
+        auth.Login(username, password, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                Intent intent = new Intent(thisActivity, Cathegory.class);
+                startActivity(intent);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                findViewById(R.id.invalidLogin).setVisibility(View.VISIBLE);
+            }
+        });
     }
 }

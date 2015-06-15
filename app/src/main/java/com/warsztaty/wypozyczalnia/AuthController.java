@@ -7,55 +7,59 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.util.HashMap;
+import java.util.Map;
 
 import java.io.IOException;
 
 public class AuthController extends ApiController {
+
+
     public AuthController(Context context) { super(context); }
 
-    public void Login(String username, String password) {
-        JSONObject obj = new JSONObject();
+    public void Login(String username, String password, final Response.Listener<String> listener, Response.ErrorListener errorListener) {
+        Map<String, String> obj = new HashMap<String, String>();
 
-        try {
-            obj.put("username", username);
-            obj.put("password", password);
-        }
-        catch(JSONException e) {
-            Log.d("AuthController", "Could not parse JSON: " + e.toString());
-        }
+        obj.put("username", username);
+        obj.put("password", password);
 
-        SendRequest(Request.Method.POST, R.string.api_login, obj, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("AuthController", "Logged in: " + response.toString());
-                    }
-                },
-                new GenericErrorListener("AuthController"));
+
+        SendRequest(Request.Method.POST, R.string.api_login, obj, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                listener.onResponse(s);
+                try {
+                    JSONObject respObj = new JSONObject(s);
+                    Log.d("AuthController", "AuthToken: " + respObj.get("authToken"));
+                }
+                catch(JSONException e) {
+
+                }
+
+            }
+        }, errorListener);
     }
 
-    public void Register(String username, String password, String email) {
-        JSONObject obj = new JSONObject();
+    public void Register(String username, String password, String email, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+        Map<String, String> obj = new HashMap<String, String>();
 
-        try {
-            obj.put("username", username);
-            obj.put("password", password);
-            obj.put("email", email);
-        }
-        catch(JSONException e) {
-            Log.d("AuthController", "Could not parse JSON: " + e.toString());
-        }
+        obj.put("username", username);
+        obj.put("password", password);
+        obj.put("email", email);
 
-        SendRequest(Request.Method.POST, R.string.api_register, obj, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("AuthController", "Registered: " + response.toString());
-                    }
-                },
-                new GenericErrorListener("AuthController"));
+        SendRequest(Request.Method.POST, R.string.api_register, obj, listener, errorListener);
     }
+
+
+    public static boolean IsAuthorized() { return AuthToken != null; }
+    public static String GetAuthToken() { return AuthToken; }
+
+    private static String AuthToken = null;
+
 
 
 
