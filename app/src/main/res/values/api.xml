@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name='api_path'>http://carrent.appbeavers.com:80/</string>
+    <string name='api_path'>http://carrent.appbeavers.com/</string>
     <string name="api_register">auth/register</string>
-    <string name="api_login">auth/login</string>
+    <string name="api_login">login</string>
 </resources>
