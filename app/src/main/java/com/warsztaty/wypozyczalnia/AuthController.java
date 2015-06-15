@@ -32,8 +32,14 @@ public class AuthController extends ApiController {
             @Override
             public void onResponse(String s) {
                 listener.onResponse(s);
-                AuthToken = s;
-                Log.d("AuthController", "AuthToken: " + AuthToken);
+                try {
+                    JSONObject respObj = new JSONObject(s);
+                    Log.d("AuthController", "AuthToken: " + respObj.get("authToken"));
+                }
+                catch(JSONException e) {
+
+                }
+
             }
         }, errorListener);
     }
