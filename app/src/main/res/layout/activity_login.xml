@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="E-Mail"
+            android:text="Nazwa użytkownika"
             android:id="@+id/textView5" />
 
         <EditText
@@ -39,11 +39,26 @@
             android:ems="10"
             android:id="@+id/passwordText" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Zaloguj"
-            android:id="@+id/button"
-            android:onClick="clickLogin" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Zaloguj"
+                android:id="@+id/button"
+                android:onClick="clickLogin" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Błędne dane"
+                android:id="@+id/invalidLogin"
+                android:visibility="invisible" />
+        </LinearLayout>
+
     </LinearLayout>
 </RelativeLayout>

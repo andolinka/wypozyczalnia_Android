@@ -1,5 +1,7 @@
 package com.warsztaty.wypozyczalnia;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +9,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -60,13 +66,31 @@ public class RegisterActivity extends ActionBarActivity {
         String password = ((EditText)findViewById(R.id.passwordText)).getText().toString();
         String rptPassword = ((EditText)findViewById(R.id.rptPasswordText)).getText().toString();
 
-        if(password != rptPassword)
+        if(!password.equals(rptPassword))
         {
-            Log.d(TAG, "Passwords do not match");
+            ((TextView)findViewById(R.id.registerError)).setText("Hasła się nie zgadzają");
+            Log.d(TAG, "Passwords do not match: " + password + " " + rptPassword);
+            findViewById(R.id.registerError).setVisibility(View.VISIBLE);
             // Do something here
             return;
         }
+
         AuthController controller = new AuthController(this);
-        controller.Register(username, password, email);
+        final Activity thisActivity = this;
+        controller.Register(username, password, email, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                Intent intent = new Intent(thisActivity, LoginActivity.class);
+                startActivity(intent);
+                Log.d("RegisterActivity", "Register response: " + s);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                ((TextView)findViewById(R.id.registerError)).setText("Wystąpił błąd rejestracji");
+                findViewById(R.id.registerError).setVisibility(View.VISIBLE);
+                Log.d("RegisterActivity", "Could not register: " + error.toString());
+            }
+        });
     }
 }
