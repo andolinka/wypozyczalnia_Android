@@ -17,7 +17,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Cache;
 import com.android.volley.Network;
 import com.android.volley.Request;
@@ -28,21 +31,34 @@ import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 
 public class ApiController {
     public ApiController(Context context) {
         AppContext = context;
     }
 
-    public void SendRequest(int method, int apiUrlResourceId, JSONObject request, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
-        SendRequest(method, AppContext.getResources().getString(apiUrlResourceId), request, listener, errorListener);
+    public void SendRequest(int method, int apiUrlResourceId, final Map<String, String> requestParams, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+        SendRequest(method, AppContext.getResources().getString(apiUrlResourceId), requestParams, listener, errorListener);
     }
-    public void SendRequest(int method, String apiUrl, JSONObject request, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+    public void SendRequest(int method, String apiUrl, final Map<String, String> requestParams, Response.Listener<String> listener, Response.ErrorListener errorListener) {
         RequestQueue queue = GetQueue(AppContext);
 
-        JsonObjectRequest req = new JsonObjectRequest(method, AppContext.getResources().getString(R.string.api_path) + apiUrl, request, listener, errorListener);
+        StringRequest req = new StringRequest(Request.Method.POST, AppContext.getResources().getString(R.string.api_path) + apiUrl, listener, errorListener) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> pars = new HashMap<String, String>();
+                pars.put("Content-Type", "application/x-www-form-urlencoded");
+                return pars;
+            }
 
-        Log.d("ApiController", "Sending request: " + request.toString());
+            @Override
+            public Map<String, String> getParams(){
+                return requestParams;
+            }
+        };
+
+        Log.d("ApiController", "Sending request: " + requestParams.toString());
         queue.add(req);
     }
 
