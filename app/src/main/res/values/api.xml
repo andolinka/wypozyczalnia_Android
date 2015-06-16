@@ -7,4 +7,5 @@
     <string name="api_add_address">users/address/</string>
     <string name="api_car_categories">car_categories/</string>
     <string name="api_cars">cars/</string>
+
 </resources>

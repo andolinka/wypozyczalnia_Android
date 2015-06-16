@@ -52,7 +52,7 @@ public class LoginActivity extends ActionBarActivity {
             @Override
             public void onResponse(String s) {
 
-                Intent intent = new Intent(LoginActivity.this, Category.class);
+                Intent intent = new Intent(LoginActivity.this, FirstPage.class);
 
                 startActivity(intent);
             }

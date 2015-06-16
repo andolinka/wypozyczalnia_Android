@@ -3,6 +3,7 @@ package com.warsztaty.wypozyczalnia;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,6 +11,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ewelina on 11.06.15.
@@ -42,34 +53,65 @@ public class FirstPage extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_page);
-//TODO:wczytywanie z bazy
-        String[] elementy = {"Element 1", "Element 2", "Element 3", "Element 4", "Element 5", "Element 6", "Element 7",
-                "Element 8", "Element 9", "Element 10"};
 
-        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.elementy_listy_main, R.id.textView29, elementy);
+        ApiController controller = new AuthController(this);
+        final FirstPage thisPage = this;
+
+        controller.SendRequest(Request.Method.GET, R.string.api_cars, null, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String res) {
+                Log.d("FirstPage", "Response: " + res);
+                try {
+
+                    thisPage.buildSimpleCarList(new JSONObject(res));
+                }
+                catch(JSONException e) {
+                    Log.d("FirstPage", "Could not parse JSON: " + e.getMessage());
+                }
+            }
+        }, new ApiController.GenericErrorListener("Category"));
 
         ListView lista = (ListView)findViewById(R.id.listView);
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(FirstPage.this, RentACar.class);
+                String item = (String)parent.getItemAtPosition(position);
+                Toast.makeText(FirstPage.this, "" + (position + 1), Toast.LENGTH_SHORT).show();
+                startActivity(intent);
+            }
+        });
+
+    }
+    public void buildSimpleCarList (JSONObject carsDescription){
+        ListView lista = (ListView)findViewById(R.id.listView);
+        List<String> description = new ArrayList<String>();
+        try {
+            JSONArray results = carsDescription.getJSONArray("results");
+
+            for(int i = 0; i < results.length(); i++) {
+                JSONObject obj = results.getJSONObject(i);
+
+                description.add(obj.getString("description"));
+            }
+        }
+        catch(JSONException e) {
+            Log.d("FirstPage", "Could not parse description due to " + e.getMessage());
+        }
+         ArrayAdapter adapter = new ArrayAdapter(this, R.layout.elementy_listy_main, R.id.textView29, description);
 
         lista.setAdapter(adapter);
 
-        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int position,
-                                    long arg3) {
-                Toast.makeText(FirstPage.this, "" + (position + 1), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     public void cathegoryClick(View view){
-        Intent intent = new Intent(this, Cathegory.class);
+        Intent intent = new Intent(FirstPage.this, Category.class);
         startActivity(intent);
 
     }
 
     public void filterClick(View view){
-        Intent intent = new Intent(this, FilterByPreference.class);
+        Intent intent = new Intent(FirstPage.this, FilterByPreference.class);
         startActivity(intent);
 
     }

@@ -52,12 +52,12 @@ public class AddAddress extends ActionBarActivity {
         String country = ((EditText)findViewById(R.id.editText5)).getText().toString();
 
         AuthController controller = new AuthController(this);
-        final Activity thisActivity = this;
+//        final Activity thisActivity = this;
 
         controller.AddAddress(street, number, zipcode, city, country, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-                Intent intent = new Intent(thisActivity, AddAddress.class);
+                Intent intent = new Intent(AddAddress.this, SelectAddress.class);
                 startActivity(intent);
                 Log.d("AddAddress", "AddAddress response: " + s);
             }
