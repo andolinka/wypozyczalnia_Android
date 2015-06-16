@@ -26,17 +26,29 @@ public class ApiController {
         AppContext = context;
     }
 
-    public void SendRequest(int method, int apiUrlResourceId, String urlParameter, final Map<String, String> requestParams, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+    public void SendRequest(int method, int apiUrlResourceId, String urlParameter, Map<String, String> requestParams, Response.Listener<String> listener, Response.ErrorListener errorListener) {
         SendRequest(method, AppContext.getResources().getString(apiUrlResourceId) + urlParameter + "/", requestParams, listener, errorListener);
     }
 
-    public void SendRequest(int method, int apiUrlResourceId, final Map<String, String> requestParams, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+    public void SendRequest(int method, int apiUrlResourceId, Map<String, String> requestParams, Response.Listener<String> listener, Response.ErrorListener errorListener) {
         SendRequest(method, AppContext.getResources().getString(apiUrlResourceId), requestParams, listener, errorListener);
     }
-    public void SendRequest(int method, String apiUrl, final Map<String, String> requestParams, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+    public void SendRequest(int method, String apiUrl, Map<String, String> requestParams, Response.Listener<String> listener, Response.ErrorListener errorListener) {
         RequestQueue queue = GetQueue(AppContext);
 
-        StringRequest req = new StringRequest(method, AppContext.getResources().getString(R.string.api_path) + apiUrl, listener, errorListener) {
+        String fullURL = AppContext.getResources().getString(R.string.api_path) + apiUrl;
+        if(method == Request.Method.GET && requestParams != null && requestParams.size() > 0) {
+            fullURL += "?";
+            for(Map.Entry<String, String> entry : requestParams.entrySet()) {
+                fullURL += String.format("%s=%s", entry.getKey(), entry.getValue());
+                fullURL += "&";
+            }
+            requestParams = null;
+        }
+
+        final Map<String, String> finalParameters = requestParams;
+
+        StringRequest req = new StringRequest(method, fullURL, listener, errorListener) {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> pars = new HashMap<String, String>();
@@ -48,7 +60,7 @@ public class ApiController {
 
             @Override
             public Map<String, String> getParams(){
-                return requestParams;
+                return finalParameters;
             }
 
             @Override
@@ -65,7 +77,7 @@ public class ApiController {
             }
         };
 
-        Log.d("ApiController", "Sending request: " + (requestParams != null ? requestParams.toString() : ""));
+        Log.d("ApiController", "Sending a request to: " + fullURL + " with params: " + (requestParams != null ? requestParams.toString() : ""));
         queue.add(req);
     }
 

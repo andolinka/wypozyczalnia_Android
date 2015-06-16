@@ -54,7 +54,8 @@ public class Category extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(Category.this, Cars.class);
-                intent.putExtra("category_id", id);
+                String item = (String)parent.getItemAtPosition(position);
+                intent.putExtra("car_category", position + 1);
                 startActivity(intent);
             }
         });

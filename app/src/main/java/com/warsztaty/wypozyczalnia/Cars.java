@@ -3,24 +3,41 @@ package com.warsztaty.wypozyczalnia;
 import android.content.res.Resources;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class Cars extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        int categoryId = getIntent().getExtras().getInt("category_id");
+        int categoryId = getIntent().getExtras().getInt("car_category");
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("car_category", String.valueOf(categoryId));
 
         ApiController api = new ApiController(this);
-        api.SendRequest(Request.Method.GET, R.string.api_cars, String.valueOf(categoryId), null, new Response.Listener<String>() {
+        api.SendRequest(Request.Method.GET, R.string.api_cars, params, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
+                Log.d("Cars", "Cars: " + s);
+                try {
+                    JSONObject obj = new JSONObject(s);
 
+                }
+                catch(JSONException e) {
+
+                }
             }
         }, new ApiController.GenericErrorListener("Cars"));
 
