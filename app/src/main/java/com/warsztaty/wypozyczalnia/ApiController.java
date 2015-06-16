@@ -4,17 +4,20 @@ package com.warsztaty.wypozyczalnia;
 import android.content.Context;
 import android.util.Log;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.android.volley.Cache;
 import com.android.volley.Network;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
 
@@ -42,6 +45,19 @@ public class ApiController {
             @Override
             public Map<String, String> getParams(){
                 return requestParams;
+            }
+
+            @Override
+            protected Response<String> parseNetworkResponse (NetworkResponse response) {
+                try {
+                    String respString = new String(response.data, "UTF-8");
+                    return Response.success(respString, HttpHeaderParser.parseCacheHeaders(response));
+                }
+                catch(UnsupportedEncodingException e) {
+                    Log.d("ApiController", "Wrong encoding of response data, reverting to default response");
+                    return super.parseNetworkResponse(response);
+                }
+
             }
         };
 
