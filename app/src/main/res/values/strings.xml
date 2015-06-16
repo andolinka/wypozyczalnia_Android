@@ -6,7 +6,7 @@
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_add_address">AddAddress</string>
-    <string name="title_activity_cathegory">Cathegory</string>
+    <string name="title_activity_cathegory">Category</string>
     <string name="title_activity_filter_by_preference">FilterByPreference</string>
     <string name="title_activity_first_page">FirstPage</string>
     <string name="title_activity_rent_a_car">RentACar</string>
