@@ -26,6 +26,10 @@ public class ApiController {
         AppContext = context;
     }
 
+    public void SendRequest(int method, int apiUrlResourceId, String urlParameter, final Map<String, String> requestParams, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+        SendRequest(method, AppContext.getResources().getString(apiUrlResourceId) + urlParameter + "/", requestParams, listener, errorListener);
+    }
+
     public void SendRequest(int method, int apiUrlResourceId, final Map<String, String> requestParams, Response.Listener<String> listener, Response.ErrorListener errorListener) {
         SendRequest(method, AppContext.getResources().getString(apiUrlResourceId), requestParams, listener, errorListener);
     }

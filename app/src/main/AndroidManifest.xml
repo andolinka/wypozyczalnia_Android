@@ -50,7 +50,10 @@
             android:name=".SelectAddress"
             android:label="@string/title_activity_select_address" >
         </activity>
-
+        <activity
+            android:name=".Cars"
+            android:label="@string/title_activity_cars" >
+        </activity>
     </application>
 
 </manifest>

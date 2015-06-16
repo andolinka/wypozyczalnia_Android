@@ -1,10 +1,13 @@
 package com.warsztaty.wypozyczalnia;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -45,6 +48,16 @@ public class Category extends ActionBarActivity {
             }
         }, new ApiController.GenericErrorListener("Category"));
 
+
+        ListView categoryList = (ListView)findViewById(R.id.categoryList);
+        categoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(Category.this, Cars.class);
+                intent.putExtra("category_id", id);
+                startActivity(intent);
+            }
+        });
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
