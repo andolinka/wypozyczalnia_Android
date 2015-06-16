@@ -52,7 +52,7 @@ public class LoginActivity extends ActionBarActivity {
         auth.Login(username, password, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-                Intent intent = new Intent(thisActivity, Cathegory.class);
+                Intent intent = new Intent(thisActivity, Category.class);
                 startActivity(intent);
             }
         }, new Response.ErrorListener() {

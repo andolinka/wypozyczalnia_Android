@@ -1,20 +1,15 @@
 package com.warsztaty.wypozyczalnia;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
-
-import java.io.IOException;
 
 public class AuthController extends ApiController {
 
@@ -31,14 +26,16 @@ public class AuthController extends ApiController {
         SendRequest(Request.Method.POST, R.string.api_login, obj, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-                listener.onResponse(s);
                 try {
                     JSONObject respObj = new JSONObject(s);
-                    Log.d("AuthController", "AuthToken: " + respObj.get("authToken"));
+                    AuthToken = respObj.get("auth_token").toString();
+                    Log.d("AuthController", "AuthToken: " + AuthToken);
                 }
                 catch(JSONException e) {
-
+                    Log.d("AuthController", "Could not parse JSON");
+                    return;
                 }
+                listener.onResponse(s);
 
             }
         }, errorListener);
