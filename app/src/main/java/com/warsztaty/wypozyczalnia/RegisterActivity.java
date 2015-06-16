@@ -76,11 +76,10 @@ public class RegisterActivity extends ActionBarActivity {
         }
 
         AuthController controller = new AuthController(this);
-        final Activity thisActivity = this;
         controller.Register(username, password, email, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-                Intent intent = new Intent(thisActivity, LoginActivity.class);
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                 startActivity(intent);
                 Log.d("RegisterActivity", "Register response: " + s);
             }

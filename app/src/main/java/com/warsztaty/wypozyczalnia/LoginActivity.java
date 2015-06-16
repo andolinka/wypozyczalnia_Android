@@ -48,11 +48,12 @@ public class LoginActivity extends ActionBarActivity {
         AuthController auth = new AuthController(this);
         String username =  ((EditText)findViewById(R.id.emailText)).getText().toString();
         String password = ((EditText)findViewById(R.id.passwordText)).getText().toString();
-        final Activity thisActivity = this;
         auth.Login(username, password, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-                Intent intent = new Intent(thisActivity, FirstPage.class);
+
+                Intent intent = new Intent(LoginActivity.this, Category.class);
+
                 startActivity(intent);
             }
         }, new Response.ErrorListener() {

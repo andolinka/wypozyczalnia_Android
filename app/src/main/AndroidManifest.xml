@@ -31,7 +31,7 @@
             android:label="@string/title_activity_add_address" >
         </activity>
         <activity
-            android:name=".Cathegory"
+            android:name=".Category"
             android:label="@string/title_activity_cathegory" >
         </activity>
         <activity
@@ -50,7 +50,10 @@
             android:name=".SelectAddress"
             android:label="@string/title_activity_select_address" >
         </activity>
-
+        <activity
+            android:name=".Cars"
+            android:label="@string/title_activity_cars" >
+        </activity>
     </application>
 
 </manifest>
