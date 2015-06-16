@@ -2,7 +2,9 @@
 <resources>
     <string name='api_path'>http://carrent.appbeavers.com/</string>
 
-    <string name="api_register">auth/register</string>
-    <string name="api_login">login</string>
+    <string name="api_register">auth/register/</string>
+    <string name="api_login">auth/login/</string>
+    <string name="api_add_address">users/address/</string>
+    <string name="api_cars">cars/</string>
 
 </resources>

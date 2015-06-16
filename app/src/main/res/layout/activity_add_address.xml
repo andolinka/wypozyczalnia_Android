@@ -127,8 +127,15 @@
             android:layout_height="wrap_content"
             android:text="Dodaj adres"
             android:id="@+id/button4"
+            android:onClick="addAddressClick"
             android:layout_gravity="center_horizontal" />
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Błędne dane"
+            android:id="@+id/invalidAddress"
+            android:visibility="invisible" />
 
     </LinearLayout>
 
