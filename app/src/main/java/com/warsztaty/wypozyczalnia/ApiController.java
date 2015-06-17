@@ -4,6 +4,7 @@ package com.warsztaty.wypozyczalnia;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
+import android.util.LruCache;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -20,8 +21,10 @@ import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
+
 
 public class ApiController {
     public ApiController(Context context) {
@@ -42,6 +45,7 @@ public class ApiController {
         Log.d("ApiController", "Requesting image: " + imageUrl);
         GetQueue(AppContext).add(req);
     }
+
     public void SendRequest(int method, String apiUrl, Map<String, String> requestParams, Response.Listener<String> listener, Response.ErrorListener errorListener) {
         RequestQueue queue = GetQueue(AppContext);
 
@@ -90,6 +94,17 @@ public class ApiController {
         queue.add(req);
     }
 
+    static public ImageLoader GetImageLoader(Context context) {
+        if(ImgCache == null) {
+            ImgCache = new LruBitmapCache(1024 * 1024 * 2);
+        }
+
+        if(ImgLoader == null) {
+            ImgLoader = new ImageLoader(GetQueue(context), ImgCache);
+        }
+        return ImgLoader;
+    }
+
     static protected RequestQueue GetQueue(Context context) {
         if(ApiQueue == null) {
             Cache cache = new DiskBasedCache(context.getCacheDir(), 1024 * 1024);
@@ -117,4 +132,30 @@ public class ApiController {
     protected Context AppContext;
 
     static private RequestQueue ApiQueue = null;
+    static private ImageLoader ImgLoader = null;
+    static private ImageLoader.ImageCache ImgCache = null;
+
+    // Bitmap cache by Ficusk
+    static private class LruBitmapCache extends LruCache<String, Bitmap> implements ImageLoader.ImageCache {
+
+        public LruBitmapCache(int maxSize) {
+            super(maxSize);
+        }
+
+        @Override
+        protected int sizeOf(String key, Bitmap value) {
+            return value.getRowBytes() * value.getHeight();
+        }
+
+        @Override
+        public Bitmap getBitmap(String url) {
+            return get(url);
+        }
+
+        @Override
+        public void putBitmap(String url, Bitmap bitmap) {
+            put(url, bitmap);
+        }
+
+    }
 }
