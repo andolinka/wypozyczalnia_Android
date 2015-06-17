@@ -39,7 +39,7 @@ public class ApiController {
     public void SendRequest(String imageUrl, Response.Listener<Bitmap> listener, Response.ErrorListener errorListener) {
         ImageRequest req = new ImageRequest(imageUrl, listener, 0, 0, null, errorListener);
 
-        Log.d("ApiController", "Requestion image: " + imageUrl);
+        Log.d("ApiController", "Requesting image: " + imageUrl);
         GetQueue(AppContext).add(req);
     }
     public void SendRequest(int method, String apiUrl, Map<String, String> requestParams, Response.Listener<String> listener, Response.ErrorListener errorListener) {
