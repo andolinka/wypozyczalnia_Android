@@ -2,6 +2,7 @@ package com.warsztaty.wypozyczalnia;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import java.io.UnsupportedEncodingException;
@@ -19,6 +20,7 @@ import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 
 public class ApiController {
@@ -32,6 +34,13 @@ public class ApiController {
 
     public void SendRequest(int method, int apiUrlResourceId, Map<String, String> requestParams, Response.Listener<String> listener, Response.ErrorListener errorListener) {
         SendRequest(method, AppContext.getResources().getString(apiUrlResourceId), requestParams, listener, errorListener);
+    }
+
+    public void SendRequest(String imageUrl, Response.Listener<Bitmap> listener, Response.ErrorListener errorListener) {
+        ImageRequest req = new ImageRequest(imageUrl, listener, 0, 0, null, errorListener);
+
+        Log.d("ApiController", "Requestion image: " + imageUrl);
+        GetQueue(AppContext).add(req);
     }
     public void SendRequest(int method, String apiUrl, Map<String, String> requestParams, Response.Listener<String> listener, Response.ErrorListener errorListener) {
         RequestQueue queue = GetQueue(AppContext);
