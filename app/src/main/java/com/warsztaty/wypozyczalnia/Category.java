@@ -19,6 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -55,7 +56,9 @@ public class Category extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(Category.this, Cars.class);
                 String item = (String)parent.getItemAtPosition(position);
-                intent.putExtra("car_category", position + 1);
+                HashMap<String, String> filters = new HashMap<String, String>();
+                filters.put("car_category", String.valueOf(position + 1));
+                intent.putExtra("filters", filters);
                 startActivity(intent);
             }
         });

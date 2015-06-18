@@ -1,5 +1,6 @@
 package com.warsztaty.wypozyczalnia;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -21,25 +22,8 @@ public class Cars extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        int categoryId = getIntent().getExtras().getInt("car_category");
-
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("car_category", String.valueOf(categoryId));
-
-        ApiController api = new ApiController(this);
-        api.SendRequest(Request.Method.GET, R.string.api_cars, params, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String s) {
-                Log.d("Cars", "Cars: " + s);
-                try {
-                    JSONObject obj = new JSONObject(s);
-
-                }
-                catch(JSONException e) {
-
-                }
-            }
-        }, new ApiController.GenericErrorListener("Cars"));
+        Filters = (HashMap<String,String>)getIntent().getExtras().getSerializable("filters");
+        GetCars(Filters);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cars);
@@ -61,10 +45,48 @@ public class Cars extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_filter_by_preferences) {
+            Intent intent = new Intent(this, FilterByPreference.class);
+            intent.putExtra("cars", CarsList.toString());
+            startActivityForResult(intent, FilterByPreference.FILTER_RESULTS);
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == FilterByPreference.FILTER_RESULTS) {
+            if(resultCode == RESULT_OK){
+                Filters = (HashMap<String,String>)data.getExtras().getSerializable("filters");
+                GetCars(Filters);
+            }
+        }
+    }
+
+    private void GetCars(Map<String, String> filters) {
+        ApiController api = new ApiController(this);
+        api.SendRequest(Request.Method.GET, R.string.api_cars, filters, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                Log.d("Cars", "Cars: " + s);
+                try {
+                    JSONObject obj = new JSONObject(s);
+                    Cars.this.BuildCarsList(obj);
+                } catch (JSONException e) {
+                    Log.d("Cars", "Could not parse JSON with requested cars");
+                }
+            }
+        }, new ApiController.GenericErrorListener("Cars"));
+    }
+
+    private void BuildCarsList(JSONObject obj) {
+        CarsList = obj;
+
+        
+    }
+
+    private HashMap<String, String> Filters = null;
+    private JSONObject CarsList = null;
 }

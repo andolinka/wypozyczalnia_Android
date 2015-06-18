@@ -1,19 +1,26 @@
 package com.warsztaty.wypozyczalnia;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
+import java.util.HashMap;
 
 /**
  * Created by ewelina on 11.06.15.
  */
 public class FilterByPreference extends ActionBarActivity {
+    public static final int FILTER_RESULTS = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter_by_preference);
+
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -21,6 +28,8 @@ public class FilterByPreference extends ActionBarActivity {
         getMenuInflater().inflate(R.menu.menu_filter_by_preference, menu);
         return true;
     }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -36,5 +45,11 @@ public class FilterByPreference extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void applyClick(View view){
 
+
+        finish();
+
+
+    }
 }
