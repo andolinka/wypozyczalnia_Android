@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Rok produkcji"
-                android:id="@+id/checkBox" />
+                android:id="@+id/checkbox_year_of_production" />
 
         </TableRow>
 
@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:ems="10"
-                android:id="@+id/editText6" />
+                android:id="@+id/min_year_of_production" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -60,7 +60,7 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:id="@+id/editText7" />
+                android:id="@+id/max_year_of_production" />
         </TableRow>
 
         <TableRow
@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Pojemność silnika (cm3)"
-                android:id="@+id/checkBox1" />
+                android:id="@+id/checkbox_engine_capacity" />
 
         </TableRow>
 
@@ -92,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:ems="10"
-                android:id="@+id/editText8" />
+                android:id="@+id/min_engine_capacity" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -105,7 +105,7 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:id="@+id/editText9" />
+                android:id="@+id/max_engine_capacity" />
         </TableRow>
 
         <TableRow
@@ -117,7 +117,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Moc silnika (KM)"
-                android:id="@+id/checkBox2" />
+                android:id="@+id/checkbox_engine_power" />
 
         </TableRow>
 
@@ -137,7 +137,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:ems="10"
-                android:id="@+id/editText10" />
+                android:id="@+id/min_engine_power" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -150,7 +150,7 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:id="@+id/editText11" />
+                android:id="@+id/max_engine_power" />
         </TableRow>
 
         <TableRow
@@ -162,7 +162,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Cena (zł)"
-                android:id="@+id/checkBox4" />
+                android:id="@+id/checkbox_price_cents" />
 
         </TableRow>
 
@@ -182,7 +182,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:ems="10"
-                android:id="@+id/editText12" />
+                android:id="@+id/min_price_cents" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -195,14 +195,29 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:id="@+id/editText13" />
+                android:id="@+id/max_price_cents" />
         </TableRow>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Zaaplikuj"
-            android:id="@+id/applyButton" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Zaaplikuj"
+                android:id="@+id/applyButton"
+                android:nestedScrollingEnabled="false"
+                android:onClick="applyClick" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Błąd filtrów"
+                android:id="@+id/filtersError"
+                android:visibility="invisible" />
+        </TableRow>
 
     </LinearLayout>
 </RelativeLayout>

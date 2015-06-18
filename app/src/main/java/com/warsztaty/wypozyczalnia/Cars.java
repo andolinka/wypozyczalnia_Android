@@ -47,7 +47,7 @@ public class Cars extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_filter_by_preferences) {
             Intent intent = new Intent(this, FilterByPreference.class);
-            intent.putExtra("cars", CarsList.toString());
+            intent.putExtra("filters", Filters);
             startActivityForResult(intent, FilterByPreference.FILTER_RESULTS);
         }
 
@@ -67,6 +67,7 @@ public class Cars extends ActionBarActivity {
 
     private void GetCars(Map<String, String> filters) {
         ApiController api = new ApiController(this);
+        Log.d("Cars", "Using filters: " + filters.entrySet().toString());
         api.SendRequest(Request.Method.GET, R.string.api_cars, filters, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
@@ -75,7 +76,7 @@ public class Cars extends ActionBarActivity {
                     JSONObject obj = new JSONObject(s);
                     Cars.this.BuildCarsList(obj);
                 } catch (JSONException e) {
-                    Log.d("Cars", "Could not parse JSON with requested cars");
+                    Log.d("Cars", "Could not parse JSON with requested cars: " + s);
                 }
             }
         }, new ApiController.GenericErrorListener("Cars"));
@@ -84,7 +85,7 @@ public class Cars extends ActionBarActivity {
     private void BuildCarsList(JSONObject obj) {
         CarsList = obj;
 
-        
+
     }
 
     private HashMap<String, String> Filters = null;
