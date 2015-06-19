@@ -93,18 +93,21 @@ public class Cars extends ActionBarActivity {
     private void BuildCarsList(JSONObject obj) {
         CarsList = obj;
 
-        List<String> cars = new ArrayList<String>();
+        List<CarAdapter.CarData> cars = new ArrayList<CarAdapter.CarData>();
 
         try {
-            JSONArray array = obj.getJSONArray("results");
+            JSONArray results = obj.getJSONArray("results");
 
-            if(array.length() == 0) {
+            if(results.length() == 0) {
                 findViewById(R.id.noresultsCars).setVisibility(View.VISIBLE);
             }
             else {
                 findViewById(R.id.noresultsCars).setVisibility(View.INVISIBLE);
-                for(int i = 0; i < array.length(); i++) {
-                    cars.add(array.getJSONObject(i).getString("description"));
+                for(int i = 0; i < results.length(); i++) {
+                    JSONObject carJson = results.getJSONObject(i);
+
+                    CarAdapter.CarData data = new CarAdapter.CarData(carJson);
+                    cars.add(data);
                 }
             }
 
@@ -114,14 +117,17 @@ public class Cars extends ActionBarActivity {
             return;
         }
 
-        ListView carsList = (ListView)findViewById(R.id.carsList);
+        ArrayAdapter adapter = new CarAdapter(this, R.layout.elementy_listy_main, cars);
 
-        carsList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, cars));
+        ListView carsList = ((ListView)findViewById(R.id.carsList));
+        carsList.setAdapter(adapter);
 
         carsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(Cars.this, RentACar.class);
+                CarAdapter.CarData data = (CarAdapter.CarData)parent.getItemAtPosition(position);
+                intent.putExtra("id", data.ID);
                 startActivity(intent);
             }
         });

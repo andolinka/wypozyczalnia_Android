@@ -85,22 +85,33 @@ public class FirstPage extends ActionBarActivity {
     }
     public void buildSimpleCarList (JSONObject carsDescription){
         ListView lista = (ListView)findViewById(R.id.listView);
-        List<String> description = new ArrayList<String>();
+        List<CarAdapter.CarData> cars = new ArrayList<CarAdapter.CarData>();
         try {
             JSONArray results = carsDescription.getJSONArray("results");
 
             for(int i = 0; i < results.length(); i++) {
                 JSONObject obj = results.getJSONObject(i);
 
-                description.add(obj.getString("description"));
+                CarAdapter.CarData data = new CarAdapter.CarData(obj);
+                cars.add(data);
             }
         }
         catch(JSONException e) {
             Log.d("FirstPage", "Could not parse description due to " + e.getMessage());
         }
-         ArrayAdapter adapter = new ArrayAdapter(this, R.layout.elementy_listy_main, R.id.textView29, description);
+        ArrayAdapter adapter = new CarAdapter(this, R.layout.elementy_listy_main, cars);
 
         lista.setAdapter(adapter);
+
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(FirstPage.this, RentACar.class);
+                CarAdapter.CarData data = (CarAdapter.CarData)parent.getItemAtPosition(position);
+                intent.putExtra("id", data.ID);
+                startActivity(intent);
+            }
+        });
 
     }
 
