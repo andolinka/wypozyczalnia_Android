@@ -98,7 +98,7 @@ public class FirstPage extends ActionBarActivity {
         catch(JSONException e) {
             Log.d("FirstPage", "Could not parse description due to " + e.getMessage());
         }
-         ArrayAdapter adapter = new ArrayAdapter(this, R.layout.elementy_listy_main, R.id.textView29, description);
+         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, R.id.textView29, description);
 
         lista.setAdapter(adapter);
 
