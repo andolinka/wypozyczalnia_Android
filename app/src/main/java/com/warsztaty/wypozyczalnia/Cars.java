@@ -7,14 +7,22 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -85,7 +93,38 @@ public class Cars extends ActionBarActivity {
     private void BuildCarsList(JSONObject obj) {
         CarsList = obj;
 
+        List<String> cars = new ArrayList<String>();
 
+        try {
+            JSONArray array = obj.getJSONArray("results");
+
+            if(array.length() == 0) {
+                findViewById(R.id.noresultsCars).setVisibility(View.VISIBLE);
+            }
+            else {
+                findViewById(R.id.noresultsCars).setVisibility(View.INVISIBLE);
+                for(int i = 0; i < array.length(); i++) {
+                    cars.add(array.getJSONObject(i).getString("description"));
+                }
+            }
+
+        }
+        catch(JSONException e) {
+            Log.d("Cars", "Failed to build car list");
+            return;
+        }
+
+        ListView carsList = (ListView)findViewById(R.id.carsList);
+
+        carsList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, cars));
+
+        carsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(Cars.this, RentACar.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private HashMap<String, String> Filters = null;
