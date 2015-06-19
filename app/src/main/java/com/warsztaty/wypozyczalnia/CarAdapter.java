@@ -1,14 +1,12 @@
 package com.warsztaty.wypozyczalnia;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
 import org.json.JSONException;
@@ -27,12 +25,12 @@ public class CarAdapter extends ArrayAdapter<CarAdapter.CarData> {
         }
         public CarData(JSONObject obj) throws JSONException {
             ID = obj.getInt("id");
-            Description = obj.getString("description");
+            Model = obj.getString("manufacturer");
             Available = obj.getBoolean("available");
             ImageURL = obj.getString("image");
         }
         public int ID;
-        public String Description;
+        public String Model;
         public String ImageURL;
         public boolean Available;
     }
@@ -61,7 +59,7 @@ public class CarAdapter extends ArrayAdapter<CarAdapter.CarData> {
         if (data != null) {
             TextView carName = (TextView)view.findViewById(R.id.carName);
 
-            carName.setText(data.Description);
+            carName.setText(data.Model);
 
             NetworkImageView img = (NetworkImageView)view.findViewById(R.id.carImage);
             img.setImageUrl(data.ImageURL, ApiController.GetImageLoader(getContext()));

@@ -207,7 +207,6 @@
                 android:layout_height="wrap_content"
                 android:text="Zaaplikuj"
                 android:id="@+id/applyButton"
-                android:nestedScrollingEnabled="false"
                 android:onClick="applyClick" />
 
             <TextView

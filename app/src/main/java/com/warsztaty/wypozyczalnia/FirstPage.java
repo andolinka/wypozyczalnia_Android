@@ -71,16 +71,16 @@ public class FirstPage extends ActionBarActivity {
             }
         }, new ApiController.GenericErrorListener("Category"));
 
-        ListView lista = (ListView)findViewById(R.id.listView);
-        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(FirstPage.this, RentACar.class);
-                String item = (String)parent.getItemAtPosition(position);
-                Toast.makeText(FirstPage.this, "" + (position + 1), Toast.LENGTH_SHORT).show();
-                startActivity(intent);
-            }
-        });
+//        ListView lista = (ListView)findViewById(R.id.listView);
+//        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Intent intent = new Intent(FirstPage.this, RentACar.class);
+//                String item = (String)parent.getItemAtPosition(position);
+//                Toast.makeText(FirstPage.this, "" + (position + 1), Toast.LENGTH_SHORT).show();
+//                startActivity(intent);
+//            }
+//        });
 
     }
     public void buildSimpleCarList (JSONObject carsDescription){
@@ -108,7 +108,7 @@ public class FirstPage extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(FirstPage.this, RentACar.class);
                 CarAdapter.CarData data = (CarAdapter.CarData)parent.getItemAtPosition(position);
-                intent.putExtra("id", data.ID);
+                intent.putExtra("id", String.valueOf(data.ID));
                 startActivity(intent);
             }
         });

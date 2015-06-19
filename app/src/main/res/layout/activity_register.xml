@@ -92,7 +92,6 @@
                 android:layout_height="wrap_content"
                 android:text="Rejestruj"
                 android:id="@+id/registerButton"
-                android:nestedScrollingEnabled="false"
                 android:onClick="registerClick" />
 
             <TextView

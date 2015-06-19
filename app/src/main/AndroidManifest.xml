@@ -45,6 +45,10 @@
         <activity
             android:name=".RentACar"
             android:label="@string/title_activity_rent_a_car" >
+            <intent-filter>
+                <action android:name="com.warsztaty.wypozyczalnia.RentACar" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".SelectAddress"
