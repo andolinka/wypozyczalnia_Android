@@ -1,14 +1,12 @@
 package com.warsztaty.wypozyczalnia;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
 import org.json.JSONException;
@@ -90,12 +88,15 @@ public class CarDetailsAdapter extends ArrayAdapter<CarDetailsAdapter.CarData> {
             if (data.Available==true){
                 TextView avilable = (TextView)view.findViewById(R.id.dostepnoscAuta);
                 avilable.setText(" dostępny.");
+                TextView click = (TextView)view.findViewById(R.id.klikajka);
+                click.setText("Kliknij, aby wypożyczyć.");
 
             }
             else {
                 TextView avilable = (TextView)view.findViewById(R.id.dostepnoscAuta);
                 avilable.setText(" niedostępny.");
-
+                TextView click = (TextView)view.findViewById(R.id.klikajka);
+                click.setText("Kliknij, aby wrócić do wyszukiwania.");
             }
 
             NetworkImageView img = (NetworkImageView)view.findViewById(R.id.obrazAuta);
@@ -106,6 +107,5 @@ public class CarDetailsAdapter extends ArrayAdapter<CarDetailsAdapter.CarData> {
     }
 
     private int LayoutID;
-
 
 }

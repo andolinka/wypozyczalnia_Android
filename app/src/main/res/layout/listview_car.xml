@@ -208,7 +208,7 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="Kliknij, aby wypożyczyć."
-                        android:id="@+id/textView24" />
+                        android:id="@+id/klikajka" />
                 </TableRow>
 
             </LinearLayout>
