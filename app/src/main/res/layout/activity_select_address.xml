@@ -52,6 +52,6 @@
             android:text="Nowy adres"
             android:id="@+id/textView28"
             android:gravity="center"
-            android:onClick="addAddressClick" />
+            android:onClick="filterClick" />
     </LinearLayout>
 </RelativeLayout>

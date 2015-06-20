@@ -52,7 +52,8 @@
                     android:id="@+id/textView25"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
+                    android:layout_alignParentStart="true"
+                    android:onClick="cathegoryClick" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -62,7 +63,8 @@
                     android:id="@+id/textView26"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
+                    android:layout_alignParentEnd="true"
+                    android:onClick="filterClick" />
             </RelativeLayout>
 
         </LinearLayout>
