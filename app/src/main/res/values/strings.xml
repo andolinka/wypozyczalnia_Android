@@ -3,6 +3,7 @@
 
     <string name="action_settings">Ustawienia</string>
     <string name="action_filter_by_preferences">Filtry</string>
+    <string name="action_logout">Wyloguj</string>
     <string name="title_activity_register">Rejestracja</string>
     <string name="title_activity_login">Logowanie</string>
     <string name="title_activity_add_address">Dodaj adres</string>
