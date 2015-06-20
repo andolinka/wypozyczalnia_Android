@@ -52,7 +52,7 @@ public class AuthController extends ApiController {
         SendRequest(Request.Method.POST, R.string.api_register, obj, listener, errorListener);
     }
 
-    public void AddAddress(String street, String number, String zipcode, String city, String country, Response.Listener<String> listener, Response.ErrorListener errorListener){
+    /*public void AddAddress(String street, String number, String zipcode, String city, String country, Response.Listener<String> listener, Response.ErrorListener errorListener){
         Map<String, String> obj = new HashMap<String, String>();
 
         obj.put("street", street);
@@ -61,8 +61,8 @@ public class AuthController extends ApiController {
         obj.put("city", city);
         obj.put("country", country);
 
-        SendRequest(Request.Method.POST, R.string.api_add_address, obj, listener, errorListener);
-    }
+        SendRequest(Request.Method.POST, R.string.api_address, obj, listener, errorListener);
+    }*/
 
 
     public static boolean IsAuthorized() { return AuthToken != null; }

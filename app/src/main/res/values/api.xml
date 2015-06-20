@@ -4,7 +4,7 @@
 
     <string name="api_register">auth/register/</string>
     <string name="api_login">auth/login/</string>
-    <string name="api_add_address">users/address/</string>
+    <string name="api_address">users/address/</string>
     <string name="api_car_categories">car_categories/</string>
     <string name="api_cars">cars/</string>
 

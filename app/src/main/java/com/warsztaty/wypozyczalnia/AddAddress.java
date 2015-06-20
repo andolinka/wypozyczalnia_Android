@@ -11,8 +11,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by ewelina on 11.06.15.
@@ -47,10 +51,18 @@ public class AddAddress extends ActionBarActivity {
         String city = ((EditText)findViewById(R.id.editText4)).getText().toString();
         String country = ((EditText)findViewById(R.id.editText5)).getText().toString();
 
-        AuthController controller = new AuthController(this);
+        ApiController controller = new ApiController(this);
 //        final Activity thisActivity = this;
 
-        controller.AddAddress(street, number, zipcode, city, country, new Response.Listener<String>() {
+        Map<String, String> obj = new HashMap<String, String>();
+
+        obj.put("street", street);
+        obj.put("number", number);
+        obj.put("zipcode", zipcode);
+        obj.put("city", city);
+        obj.put("country", country);
+
+        controller.SendRequest(Request.Method.POST, R.string.api_address, obj, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
                 Intent intent = new Intent(AddAddress.this, SelectAddress.class);
@@ -58,15 +70,13 @@ public class AddAddress extends ActionBarActivity {
                 Log.d("AddAddress", "AddAddress response: " + s);
             }
         }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        ((TextView)findViewById(R.id.invalidAddress)).setText("Wystąpił błąd podczas dodawania nowego adresu.");
-                        findViewById(R.id.invalidAddress).setVisibility(View.VISIBLE);
-                        Log.d("AddAddress", "Could not add new address: " + error.toString());
-                    }
-                }
-        );
-
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                ((TextView)findViewById(R.id.invalidAddress)).setText("Wystąpił błąd podczas dodawania nowego adresu.");
+                findViewById(R.id.invalidAddress).setVisibility(View.VISIBLE);
+                Log.d("AddAddress", "Could not add new address: " + error.toString());
+            }
+        });
     }
 
 }
