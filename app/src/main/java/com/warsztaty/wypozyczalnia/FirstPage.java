@@ -127,4 +127,9 @@ public class FirstPage extends ActionBarActivity {
 
     }
 
+    public void addressClick(View view) {
+        Intent intent = new Intent(this, AddAddress.class);
+        startActivity(intent);
+    }
+
 }
