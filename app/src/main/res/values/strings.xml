@@ -13,5 +13,8 @@
     <string name="title_activity_rent_a_car">Wypożycz samochód</string>
     <string name="title_activity_select_address">Wybierz adres</string>
     <string name="title_activity_cars">Samochody</string>
+    <string name="title_activity_addresses">addresses</string>
+
+    <string name="hello_world">Hello world!</string>
 
 </resources>

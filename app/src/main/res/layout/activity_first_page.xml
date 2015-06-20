@@ -38,7 +38,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="DODAJ ADRES"
+                    android:text="ADRESY"
                     android:id="@+id/textView17"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
