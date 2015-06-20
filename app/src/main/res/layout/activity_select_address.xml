@@ -49,8 +49,9 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Nowy kontakt"
+            android:text="Nowy adres"
             android:id="@+id/textView28"
-            android:gravity="center" />
+            android:gravity="center"
+            android:onClick="addAddressClick" />
     </LinearLayout>
 </RelativeLayout>

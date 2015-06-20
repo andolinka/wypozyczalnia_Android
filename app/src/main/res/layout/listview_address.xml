@@ -19,28 +19,78 @@
         android:id="@+id/streetText"
         android:layout_alignParentBottom="false"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:gravity="right"
+        android:textAlignment="gravity" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Ulica:"
-        android:id="@+id/textView29"
+        android:text="Kod pocztowy:"
+        android:id="@+id/zipcodeCaption"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="45dp" />
+        android:layout_marginTop="34dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
-        android:id="@+id/textView29"
+        android:id="@+id/zipcodeText"
         android:layout_alignTop="@+id/streetText"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="45dp" />
+        android:layout_marginTop="34dp"
+        android:gravity="right"
+        android:textAlignment="gravity" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Miejscowość:"
+        android:id="@+id/cityCaption"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="68dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Państwo:"
+        android:id="@+id/countryCaption"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="102dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/cityText"
+        android:layout_alignTop="@+id/cityCaption"
+        android:layout_alignParentRight="false"
+        android:layout_alignParentEnd="true"
+        android:gravity="right"
+        android:textAlignment="gravity" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/countryText"
+        android:layout_alignTop="@+id/countryCaption"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="false"
+        android:gravity="right"
+        android:textAlignment="gravity" />
 
 </RelativeLayout>

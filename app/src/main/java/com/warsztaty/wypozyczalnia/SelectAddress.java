@@ -1,6 +1,7 @@
 package com.warsztaty.wypozyczalnia;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -17,9 +18,11 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.NetworkImageView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -56,7 +59,11 @@ class AddressAdapter extends ArrayAdapter<Address> {
             view = inf.inflate(LayoutID, null);
         }
 
-
+        Address address = getItem(position);
+        ((TextView)view.findViewById(R.id.cityText)).setText(address.City);
+        ((TextView)view.findViewById(R.id.countryText)).setText(address.Country);
+        ((TextView)view.findViewById(R.id.zipcodeText)).setText(address.ZipCode);
+        ((TextView)view.findViewById(R.id.streetText)).setText(address.Street);
 
         return view;
     }
@@ -80,10 +87,19 @@ public class SelectAddress extends ActionBarActivity {
             @Override
             public void onResponse(String res) {
                 try {
-                    JSONObject obj = new JSONObject(res);
-                    Log.d("SelectAddress", res);
-
-                    //addresses.setAdapter(new AddressAdapter(this, R.layout.listview_address, null));
+                    JSONArray array = new JSONObject(res).getJSONArray("results");
+                    List<Address> addressesList = new ArrayList<Address>();
+                    for(int i = 0; i < array.length(); i++) {
+                        JSONObject obj = array.getJSONObject(i);
+                        Address ad = new Address();
+                        ad.City = obj.getString("city");
+                        ad.Country = obj.getString("country");
+                        ad.ID = obj.getInt("id");
+                        ad.ZipCode = obj.getString("zipcode");
+                        ad.Street = obj.getString("street");
+                        addressesList.add(ad);
+                    }
+                    addresses.setAdapter(new AddressAdapter(SelectAddress.this, R.layout.listview_address, addressesList));
                 }
                 catch(JSONException e) {
                     Log.d("SelectAddress", "Could not parse a JSON obj");
@@ -93,6 +109,7 @@ public class SelectAddress extends ActionBarActivity {
 
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -108,6 +125,10 @@ public class SelectAddress extends ActionBarActivity {
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void addAddressClick(View view) {
+        startActivity(new Intent(this, AddAddress.class));
     }
 
 
