@@ -52,6 +52,16 @@ public class AuthController extends ApiController {
         SendRequest(Request.Method.POST, R.string.api_register, obj, listener, errorListener);
     }
 
+    public void Logout(final Response.Listener<String> listener, Response.ErrorListener errorListener) {
+        SendRequest(Request.Method.POST, R.string.api_logout, null, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                AuthToken = null;
+                listener.onResponse(s);
+            }
+        }, errorListener);
+    }
+
     /*public void AddAddress(String street, String number, String zipcode, String city, String country, Response.Listener<String> listener, Response.ErrorListener errorListener){
         Map<String, String> obj = new HashMap<String, String>();
 
