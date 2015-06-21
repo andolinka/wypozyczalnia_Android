@@ -17,7 +17,7 @@ public class AuthController extends ApiController {
 
     public AuthController(Context context) { super(context); }
 
-    public void Login(String username, String password, final Response.Listener<String> listener, Response.ErrorListener errorListener) {
+    public void Login(final String username, String password, final Response.Listener<String> listener, final Response.ErrorListener errorListener) {
         Map<String, String> obj = new HashMap<String, String>();
 
         obj.put("username", username);
@@ -30,13 +30,27 @@ public class AuthController extends ApiController {
                 try {
                     JSONObject respObj = new JSONObject(s);
                     AuthToken = respObj.get("auth_token").toString();
+                    Username = username;
                     Log.d("AuthController", "AuthToken: " + AuthToken);
+                    SendRequest(Request.Method.GET, R.string.api_me, null, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String s) {
+                            try {
+                                JSONObject obj = new JSONObject(s);
+                                ID = obj.getInt("id");
+                            }
+                            catch(JSONException e) {
+                                Log.d("AuthController", "Could not parse auth/me/ JSON");
+                            }
+                            listener.onResponse(s);
+                        }
+                    }, errorListener);
                 }
                 catch(JSONException e) {
                     Log.d("AuthController", "Could not parse JSON");
                     return;
                 }
-                listener.onResponse(s);
+
 
             }
         }, errorListener);
@@ -57,6 +71,8 @@ public class AuthController extends ApiController {
             @Override
             public void onResponse(String s) {
                 AuthToken = null;
+                Username = null;
+                ID = INVALID_ID;
                 listener.onResponse(s);
             }
         }, errorListener);
@@ -74,10 +90,15 @@ public class AuthController extends ApiController {
         SendRequest(Request.Method.POST, R.string.api_address, obj, listener, errorListener);
     }*/
 
+    private static final int INVALID_ID = -1;
 
     public static boolean IsAuthorized() { return AuthToken != null; }
+    public static String GetUsername() { return Username; }
+    public static int GetUserID() { return ID; };
     public static String GetAuthToken() { return AuthToken; }
 
+    private static int ID = INVALID_ID;
+    private static String Username = null;
     private static String AuthToken = null;
 
 
