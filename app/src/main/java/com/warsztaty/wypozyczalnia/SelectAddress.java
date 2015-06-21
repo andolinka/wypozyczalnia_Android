@@ -1,6 +1,8 @@
 package com.warsztaty.wypozyczalnia;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -82,14 +84,14 @@ public class SelectAddress extends ActionBarActivity {
 
         final ListView addresses = (ListView)findViewById(R.id.addressesList);
 
-        ApiController api = new ApiController(this);
+        final ApiController api = new ApiController(this);
 
         String caption = getResources().getString(R.string.select_address_noorder);
         if(getIntent().hasExtra("id")) {
             caption = getResources().getString(R.string.select_address_order);
             addresses.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
                 }
             });
@@ -97,8 +99,27 @@ public class SelectAddress extends ActionBarActivity {
         else {
             addresses.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                    final Address address = (Address)adapterView.getItemAtPosition(position);
 
+                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which){
+                                case DialogInterface.BUTTON_POSITIVE:
+                                    api.SendRequest(Request.Method.DELETE, R.string.api_address, String.valueOf(address.ID), null, new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String s) {
+                                            SelectAddress.this.buildAddressList();
+                                        }
+                                    }, new ApiController.GenericErrorListener("SelectAddress"));
+                                    break;
+                            }
+                        }
+                    };
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(SelectAddress.this);
+                    builder.setMessage("Usunąć adres?").setPositiveButton("Tak", dialogClickListener).setNegativeButton("Nie", dialogClickListener).show();
                 }
             });
         }
