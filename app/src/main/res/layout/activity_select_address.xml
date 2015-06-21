@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Wybierz adres:"
-            android:id="@+id/textView27" />
+            android:id="@+id/selectAddressCaption" />
     </LinearLayout>
 
     <LinearLayout

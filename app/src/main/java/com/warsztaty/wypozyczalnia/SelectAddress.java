@@ -83,6 +83,13 @@ public class SelectAddress extends ActionBarActivity {
 
         ApiController api = new ApiController(this);
 
+        String caption = getResources().getString(R.string.select_address_noorder);
+        if(getIntent().hasExtra("id")) {
+            caption = getResources().getString(R.string.select_address_order);
+        }
+
+        ((TextView)findViewById(R.id.selectAddressCaption)).setText(caption);
+
         api.SendRequest(Request.Method.GET, R.string.api_address, null, new Response.Listener<String>() {
             @Override
             public void onResponse(String res) {
