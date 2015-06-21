@@ -9,5 +9,6 @@
     <string name="api_car_categories">car_categories/</string>
     <string name="api_cars">cars/</string>
     <string name="api_logout">auth/logout/</string>
+    <string name="api_order">users/order/</string>
 
 </resources>

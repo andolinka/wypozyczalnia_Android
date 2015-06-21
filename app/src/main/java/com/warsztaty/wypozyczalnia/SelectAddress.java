@@ -24,7 +24,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ewelina on 11.06.15.
@@ -87,10 +89,30 @@ public class SelectAddress extends AuthorizedActivity {
         String caption = getResources().getString(R.string.select_address_noorder);
         if(getIntent().hasExtra("id")) {
             caption = getResources().getString(R.string.select_address_order);
+            final int carId = getIntent().getIntExtra("id", -1);
             addresses.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                    final Address address = (Address)adapterView.getItemAtPosition(position);
 
+                    Map<String, String> params = new HashMap<String, String>();
+
+                    params.put("user", String.valueOf(carId));
+                    params.put("address", String.valueOf(address.ID));
+                    params.put("cars", String.valueOf(carId));
+                    params.put("status", "pending");
+                    api.SendRequest(Request.Method.POST, R.string.api_order, params, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String s) {
+                            Intent intent = new Intent(SelectAddress.this, FirstPage.class);
+                            startActivity(intent);
+                            
+                            AlertDialog.Builder builder = new AlertDialog.Builder(SelectAddress.this);
+                            builder.setMessage(R.string.order_done);
+
+                            builder.create().show();
+                        }
+                    }, new ApiController.GenericErrorListener("SelectAddress"));
                 }
             });
         }
