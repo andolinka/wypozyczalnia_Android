@@ -2,7 +2,6 @@ package com.warsztaty.wypozyczalnia;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -27,7 +25,7 @@ import java.util.Map;
 /**
  * Created by ewelina on 11.06.15.
  */
-public class FirstPage extends ActionBarActivity {
+public class FirstPage extends AuthorizedActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

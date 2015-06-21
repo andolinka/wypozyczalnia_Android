@@ -1,7 +1,6 @@
 package com.warsztaty.wypozyczalnia;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -24,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class Cars extends ActionBarActivity {
+public class Cars extends AuthorizedActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

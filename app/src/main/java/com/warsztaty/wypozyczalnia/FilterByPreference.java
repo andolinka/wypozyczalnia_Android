@@ -2,7 +2,6 @@ package com.warsztaty.wypozyczalnia;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +16,7 @@ import java.util.Map;
 /**
  * Created by ewelina on 11.06.15.
  */
-public class FilterByPreference extends ActionBarActivity {
+public class FilterByPreference extends AuthorizedActivity {
     public static final int FILTER_RESULTS = 1;
 
     @Override

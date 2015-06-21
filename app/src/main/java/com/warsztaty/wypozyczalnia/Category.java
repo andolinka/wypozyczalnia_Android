@@ -2,7 +2,6 @@ package com.warsztaty.wypozyczalnia;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,7 +25,7 @@ import java.util.List;
 /**
  * Created by ewelina on 11.06.15.
  */
-public class Category extends ActionBarActivity {
+public class Category extends AuthorizedActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
