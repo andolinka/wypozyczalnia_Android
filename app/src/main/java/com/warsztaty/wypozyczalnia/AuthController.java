@@ -73,7 +73,8 @@ public class AuthController extends ApiController {
                 AuthToken = null;
                 Username = null;
                 ID = INVALID_ID;
-                listener.onResponse(s);
+                if(listener != null)
+                    listener.onResponse(s);
             }
         }, errorListener);
     }
