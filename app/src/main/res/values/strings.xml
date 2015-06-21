@@ -16,7 +16,7 @@
     <string name="title_activity_addresses">addresses</string>
 
     <string name="select_address_order">Wybierz adres do zamówienia</string>
-    <string name="select_address_noorder">Twoje adresy</string>
+    <string name="select_address_noorder">Twoje adresy, wybierz aby usunąć</string>
     <string name="hello_world">Hello world!</string>
 
 </resources>

@@ -61,13 +61,16 @@ public class AddAddress extends ActionBarActivity {
         obj.put("zipcode", zipcode);
         obj.put("city", city);
         obj.put("country", country);
+        obj.put("user", String.valueOf(AuthController.GetUserID()));
 
         controller.SendRequest(Request.Method.POST, R.string.api_address, obj, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-                Intent intent = new Intent(AddAddress.this, SelectAddress.class);
-                startActivity(intent);
-                Log.d("AddAddress", "AddAddress response: " + s);
+                Intent intent = new Intent();
+                intent.putExtra("reload", true);
+                setResult(RESULT_OK, intent);
+                finish();
+
             }
         }, new Response.ErrorListener() {
             @Override

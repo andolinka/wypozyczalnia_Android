@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -86,9 +87,58 @@ public class SelectAddress extends ActionBarActivity {
         String caption = getResources().getString(R.string.select_address_noorder);
         if(getIntent().hasExtra("id")) {
             caption = getResources().getString(R.string.select_address_order);
+            addresses.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                }
+            });
+        }
+        else {
+            addresses.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                }
+            });
         }
 
         ((TextView)findViewById(R.id.selectAddressCaption)).setText(caption);
+
+        buildAddressList();
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == ADD_ADDRESS_RESULT) {
+            if(resultCode == RESULT_OK && data.getBooleanExtra("reload", true)) {
+                buildAddressList();
+            }
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_select_address, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void buildAddressList() {
+        ApiController api = new ApiController(this);
+        final ListView addresses = (ListView)findViewById(R.id.addressesList);
 
         api.SendRequest(Request.Method.GET, R.string.api_address, null, new Response.Listener<String>() {
             @Override
@@ -113,30 +163,12 @@ public class SelectAddress extends ActionBarActivity {
                 }
             }
         }, new ApiController.GenericErrorListener("SelectAddress"));
-
-
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_select_address, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-
-        return super.onOptionsItemSelected(item);
-    }
-
     public void addAddressClick(View view) {
-        startActivity(new Intent(this, AddAddress.class));
+
+        startActivityForResult(new Intent(this, AddAddress.class), ADD_ADDRESS_RESULT);
     }
 
+    private final int ADD_ADDRESS_RESULT = 1;
 
 }
