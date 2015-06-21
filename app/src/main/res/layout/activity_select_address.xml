@@ -1,4 +1,8 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+<RelativeLayout
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -41,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="false"
         android:layout_alignParentRight="false"
-
+        android:onClick="addAddressClick"
         android:id="@+id/linearLayout4"
         android:layout_below="@+id/linearLayout3">
 
@@ -55,3 +59,4 @@
             android:onClick="addAddressClick" />
     </LinearLayout>
 </RelativeLayout>
+    </ScrollView>
