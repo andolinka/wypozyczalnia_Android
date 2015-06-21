@@ -125,7 +125,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/editText5"
                 android:layout_weight="1"
-                android:inputType="text" />
+                android:inputType="text"
+                android:text="Polska" />
         </TableRow>
 
         <Button

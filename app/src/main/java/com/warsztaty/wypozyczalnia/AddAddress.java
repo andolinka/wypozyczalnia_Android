@@ -1,9 +1,7 @@
 package com.warsztaty.wypozyczalnia;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,7 +19,7 @@ import java.util.Map;
 /**
  * Created by ewelina on 11.06.15.
  */
-public class AddAddress extends ActionBarActivity {
+public class AddAddress extends AuthorizedActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,13 +59,16 @@ public class AddAddress extends ActionBarActivity {
         obj.put("zipcode", zipcode);
         obj.put("city", city);
         obj.put("country", country);
+        obj.put("user", String.valueOf(AuthController.GetUserID()));
 
         controller.SendRequest(Request.Method.POST, R.string.api_address, obj, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-                Intent intent = new Intent(AddAddress.this, SelectAddress.class);
-                startActivity(intent);
-                Log.d("AddAddress", "AddAddress response: " + s);
+                Intent intent = new Intent();
+                intent.putExtra("reload", true);
+                setResult(RESULT_OK, intent);
+                finish();
+
             }
         }, new Response.ErrorListener() {
             @Override
