@@ -59,7 +59,7 @@ public class RentACar extends AuthorizedActivity {
 
             for(int i = 0; i < results.length(); i++) {
                 JSONObject obj = results.getJSONObject(i);
-                if(obj.get("id") == id) {
+                if(obj.getInt("id") == id) {
                     cars.add(new CarDetailsAdapter.CarData(obj););
                     break;
                 }
