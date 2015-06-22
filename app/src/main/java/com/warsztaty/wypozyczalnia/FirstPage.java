@@ -109,7 +109,7 @@ public class FirstPage extends AuthorizedActivity {
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             Intent intent = new Intent(FirstPage.this, RentACar.class);
                             CarAdapter.CarData data = (CarAdapter.CarData) parent.getItemAtPosition(position);
-                            intent.putExtra("id", String.valueOf(data.ID));
+                            intent.putExtra("id", data.ID);
                             startActivity(intent);
                         }
                     });

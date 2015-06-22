@@ -34,7 +34,7 @@ public class RentACar extends AuthorizedActivity {
         ApiController controller = new AuthController(this);
         final RentACar thisPage = this;
 
-        id = Integer.valueOf((String)getIntent().getExtras().getSerializable("id"))-1;
+        id = getIntent().getExtras().getInt("id");
 
         controller.SendRequest(Request.Method.GET, R.string.api_cars, null, new Response.Listener<String>() {
             @Override
@@ -57,10 +57,14 @@ public class RentACar extends AuthorizedActivity {
         try {
             JSONArray results = carsDescription.getJSONArray("results");
 
-                JSONObject obj = results.getJSONObject(id);
+            for(int i = 0; i < results.length(); i++) {
+                JSONObject obj = results.getJSONObject(i);
+                if(obj.get("id") == id) {
+                    cars.add(new CarDetailsAdapter.CarData(obj););
+                    break;
+                }
+            }
 
-                CarDetailsAdapter.CarData data = new CarDetailsAdapter.CarData(obj);
-                cars.add(data);
         }
         catch(JSONException e) {
             Log.d("RentACar", "Could not parse description due to " + e.getMessage());
